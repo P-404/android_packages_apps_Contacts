@@ -59,6 +59,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Loader;
+import android.icu.text.MessageFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -68,7 +69,10 @@ import android.widget.Toast;
 import com.android.contacts.ContactSaveService;
 import com.android.contacts.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.TreeSet;
 /**
  * An interaction invoked to share multiple contacts.
@@ -189,8 +193,12 @@ public class ContactMultiShareInteraction extends Fragment
         intent.setType(ContactsContract.Contacts.CONTENT_VCARD_TYPE);
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         try {
-            startActivityForResult(Intent.createChooser(intent, mContext.getResources().getQuantityString(
-                    R.plurals.title_share_via,/* quantity */ mContactIds.size()))
+            MessageFormat msgFormat = new MessageFormat(
+                getResources().getString(R.string.title_share_via),
+                Locale.getDefault());
+            Map<String, Object> arguments = new HashMap<>();
+            arguments.put("count", mContactIds.size());
+            startActivityForResult(Intent.createChooser(intent, msgFormat.format(arguments))
                     , ACTIVITY_REQUEST_CODE_SHARE);
         } catch (final ActivityNotFoundException ex) {
             Toast.makeText(getContext(), R.string.share_error, Toast.LENGTH_SHORT).show();
