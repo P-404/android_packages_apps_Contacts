@@ -16,8 +16,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.android.contacts"
-          android:versionCode="10733"
-          android:versionName="1.7.33">
+          android:versionCode="10734"
+          android:versionName="1.7.34">
 
     <uses-sdk
         android:minSdkVersion="31"
@@ -56,6 +56,7 @@
     <!-- Required in P to run Service.startForeground() -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.HIDE_NON_SYSTEM_OVERLAY_WINDOWS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -265,6 +266,17 @@
             android:label="@string/activity_title_settings"
             android:launchMode="singleTop"
             android:theme="@style/ContactsPreferencesTheme"/>
+
+        <activity
+            android:name=".preference.SetDefaultAccountActivity"
+            android:exported="true"
+            android:theme="@style/BackgroundOnlyTheme"
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.provider.action.SET_DEFAULT_ACCOUNT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".activities.LicenseActivity"
@@ -707,6 +719,10 @@
         </intent>
 
         <!-- edit contact photo -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+
         <intent>
             <action android:name="com.android.camera.action.CROP" />
             <data android:mimeType="image/*" />
