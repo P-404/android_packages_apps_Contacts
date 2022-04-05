@@ -162,7 +162,7 @@ public class ImplicitIntentsUtil {
      */
     public static Intent getIntentForSimContactsManagement() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
         ComponentName cn = new ComponentName("com.qualcomm.qti.simcontacts",
                 "com.qualcomm.qti.simcontacts.activities.SimCardsSelectionActivity");
         intent.setComponent(cn);
